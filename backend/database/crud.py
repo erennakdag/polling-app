@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
+from werkzeug.security import check_password_hash, generate_password_hash
 
 def get_user_by_id(db: Session, user_id: int) -> schemas.User:
     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -13,7 +14,7 @@ def get_user_by_username(db: Session, username: str) -> schemas.User:
 def create_user(db: Session, user: schemas.UserCreate) -> schemas.User:
     user_data = user.dict()
     
-    # TODO: hash the password
+    user_data['password'] = generate_password_hash(user_data['password'])
     
     new_user = models.User(**user_data)
     db.add(new_user)
