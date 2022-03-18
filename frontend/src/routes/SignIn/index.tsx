@@ -12,18 +12,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { API } from '../../API';
+
 
 const theme = createTheme();
 
+
 const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
   event.preventDefault();
+
   const data = new FormData(event.currentTarget);
+
   const postData = {
-    username: data.get('username'),
-    password: data.get('password'),
+    username: data.get('username')?.toString(),
+    password: data.get('password')?.toString(),
   };
-  // TODO: sign the user in
-  console.log(postData);
+
+  API.getUser(postData.username?.toString() || '')
+  .then(res => {
+    if (res.password === postData.password) {
+      console.log('Passwords match, log the user in.');
+    }
+    else {
+      console.log('NOPE!');
+    }
+  })
+  .catch(err => console.log(err));
+
 };
 
 export default function SignIn() {

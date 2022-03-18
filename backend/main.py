@@ -47,3 +47,13 @@ def create_user(user: schemas.UserCreate, db: SessionLocal = Depends(get_db)):
         raise HTTPException(status_code=400, detail='Email or Username already taken!')
     
     return crud.create_user(db, user)
+
+
+@app.get('/get-user/{username}', response_model=schemas.User)
+def get_user(username: str, db: SessionLocal = Depends(get_db)):
+    
+    user = crud.get_user_by_username(db, username)
+    if user:
+        return user
+    else:
+        raise HTTPException(status_code=404, detail='User not found!')

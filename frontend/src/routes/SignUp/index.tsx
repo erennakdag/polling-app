@@ -12,28 +12,42 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { API } from '../../API';
+
 const theme = createTheme();
 
+// async function boobs(data: any) {
+//   let response = await axios({
+//         url: `http://127.0.0.1:8000/create-user`,
+//         method: 'POST',
+//         headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json;charset=UTF-8'
+//         },
+//         data: data,
+//     });
+//     return await response.data;
+// }
 
 function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const postData = {
-    username: data.get('username'),
-    email: data.get('email'),
-    password: data.get('password'),
-    passwordAgain: data.get('password_again'),
+    username: data.get('username')?.toString(),
+    email: data.get('email')?.toString(),
+    password: data.get('password')?.toString(),
   };
+  const passwordCheck = data.get('password_again')?.toString();
+  console.log(postData);
   
-  if (postData.username?.toString().includes(' ')) {
+  if (postData.username?.includes(' ')) {
     alert('Your username cannot include whitespaces!');
   }
-  else if (postData.password?.toString() !== postData.passwordAgain?.toString()) {
+  else if (postData.password !== passwordCheck) {
     alert('Please enter the same password twice!');
   }
   else {
-    // TODO: Create user with the API
-    console.log(postData);
+    API.createUser(postData).then(res => console.log(res)).catch(err => console.log(err));
   }
 };
 
