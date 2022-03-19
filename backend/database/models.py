@@ -10,11 +10,8 @@ class Poll(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.now)
-    end_date = Column(DateTime)
-    participant_num = Column(Integer, default=0)
 
-    candidates = relationship("Option", backref="polls")
+    options = relationship("Option", backref="polls")
 
 
 class Option(Base):
@@ -22,6 +19,5 @@ class Option(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     poll_id = Column(Integer, ForeignKey("polls.id"), nullable=False)
-    name = Column(String, nullable=False)
-    description = Column(String, nullable=False)
+    text = Column(String, nullable=False)
     votes = Column(Integer, default=0)

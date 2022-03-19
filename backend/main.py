@@ -1,5 +1,6 @@
 # FastAPI Imports
-from urllib import response
+from datetime import datetime
+from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -48,3 +49,20 @@ def get_poll(poll_id: int, db: SessionLocal = Depends(get_db)):
 @app.post('/new-poll/', response_model=schemas.Poll)
 def create_poll(poll: schemas.PollCreate, db: SessionLocal = Depends(get_db)):
     return crud.create_poll(db, poll)
+
+
+@app.post('/create-options/')
+def create_options(options: schemas.MultipleOptionsCreate, db: SessionLocal = Depends(get_db)):
+    try:
+        for text in options.texts:
+            crud.create_option(db, {"poll_id": options.poll_id, "text": text})
+    except Exception as e:
+        print(e)
+        return {'error': 'something went wrong'}
+    
+    return {'success': 'everything went as expected'}
+
+
+@app.post('/vote/{option_id}')
+def vote(option_id: int, db: SessionLocal = Depends(get_db)):
+    return crud.vote(db, option_id)

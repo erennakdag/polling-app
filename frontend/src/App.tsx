@@ -6,20 +6,27 @@ import { Typography, TextField, Grid, Box, Button } from '@mui/material';
 
 import './App.css';
 
+import API from '././API';
+
 function handleSubmit(event: React.FormEvent<HTMLFormElement>, optionCount: number) {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const postData = {
-    name: data.get('name'),
-    description: data.get('description'),
-    end_date: data.get('end_date'),
+    name: data.get('name')?.toString() || '',
+    description: data.get('description')?.toString() || '',
   };
   const options: string[] = [];
   for (let i = 0; i < optionCount; i++) {
     options.push(data.get(`option${i}`)?.toString() || '');
   }
-  console.log(postData);
-  console.log(options);
+  // let poll_id: number;
+  API.createPoll(postData).then(res => {
+    // poll_id = res.id;
+    console.log(res);
+  });
+  // if (poll_id != null) {
+  //   console.log(API.createOptions({poll_id: poll_id, texts: options}));
+  // }
 };
 
 
@@ -63,33 +70,22 @@ function App() {
             ></TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField
-            type="date"
-            label="End Date"
-            id="end_date"
-            name="end_date"
-            required
-            InputLabelProps={{
-              shrink: true,
-            }}
-            sx={{width: '25%'}}
-          ></TextField>
+            <div style={{width: "100%"}}>
+              {Array.from({ length: optionCount }).map((_,id) => (
+                  <Grid key={id} item xs={12}>
+                    <TextField
+                    variant="outlined"
+                    label={`Option ${id}`}
+                    id={`option${id}`}
+                    name={`option${id}`}
+                    autoComplete='off'
+                    required
+                    sx={{width: '25%'}}
+                    />
+                  </Grid>
+              ))}
+            </div>
           </Grid>
-          <div style={{width: "100%"}}>
-            {Array.from({ length: optionCount }).map((_,id) => (
-                <Grid key={id} item xs={12}>
-                  <TextField
-                  variant="outlined"
-                  label={`Option ${id}`}
-                  id={`option${id}`}
-                  name={`option${id}`}
-                  autoComplete='off'
-                  required
-                  sx={{width: '25%'}}
-                  />
-                </Grid>
-            ))}
-          </div>
           <Grid item xs={12}>
             <Button 
             variant='contained'
@@ -99,6 +95,17 @@ function App() {
             sx={{width: '25%'}}
             >
               Add Option
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button 
+            variant='contained'
+            onClick={(e) => {
+              setOptionCount(Math.max(optionCount - 1, 0));
+            }}
+            sx={{width: '25%'}}
+            >
+              Delete Last Option
             </Button>
           </Grid>
           <Grid item xs={12}>

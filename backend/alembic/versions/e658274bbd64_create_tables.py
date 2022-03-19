@@ -21,17 +21,13 @@ def upgrade():
         'polls',
         sa.Column('id', sa.Integer, primary_key=True, index=True),
         sa.Column('name', sa.String, nullable=False),
-        sa.Column('description', sa.String, nullable=False),
-        sa.Column('created_at', sa.String),
-        sa.Column('end_date', sa.String),
-        sa.Column('participant_num', sa.Integer, default=0),
+        sa.Column('description', sa.String, nullable=True),
     )
     op.create_table(
         'options',
         sa.Column('id', sa.Integer, primary_key=True, index=True),
         sa.Column('poll_id', sa.Integer, sa.ForeignKey("polls.id"), nullable=False),
-        sa.Column('name', sa.String, nullable=False),
-        sa.Column('description', sa.String, nullable=False),
+        sa.Column('text', sa.String, nullable=False),
         sa.Column('votes', sa.Integer, default=0),
     )
 

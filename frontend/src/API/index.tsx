@@ -2,7 +2,9 @@ import axios from "axios";
 
 // URLS
 const API_URL = 'http://127.0.0.1:8000/';
-const NEW_POLL = 'new-poll';
+const NEW_POLL = 'new-poll/';
+const CREATE_OPTIONS = 'create-options/'
+const VOTE = 'vote/';
 
 // main API fetch function
 async function _request<T>(url: string, method: any, data?: T) {
@@ -19,7 +21,7 @@ async function _request<T>(url: string, method: any, data?: T) {
 }
 
 // API abstraction
-export const API = {
+const API = {
 
     // index page, only returns the varification value for testing the API
     test: async () => _request(API_URL, 'GET'),
@@ -29,5 +31,8 @@ export const API = {
 
     // POST functions
     createPoll: async (pollCreate: any) => _request(`${API_URL}${NEW_POLL}`, 'POST', pollCreate),
-
+    createOptions: async (options: any) => _request(`${API_URL}${CREATE_OPTIONS}`, 'POST', options),
+    vote: async (option_id: number) => _request(`${API_URL}${VOTE}${option_id}`, 'POST'),
 }
+
+export default API;
