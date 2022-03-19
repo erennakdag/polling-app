@@ -9,31 +9,36 @@ import './App.css';
 import API from '././API';
 
 function handleSubmit(event: React.FormEvent<HTMLFormElement>, optionCount: number) {
+
   event.preventDefault();
+
   const data = new FormData(event.currentTarget);
+  // Get the form data
   const postData = {
     name: data.get('name')?.toString() || '',
     description: data.get('description')?.toString() || '',
   };
+
+  // Get the options created
   const options: string[] = [];
   for (let i = 0; i < optionCount; i++) {
     options.push(data.get(`option${i}`)?.toString() || '');
   }
-  // let poll_id: number;
+
+  // Create a new poll and get the poll_id
+  let poll_id: number;
   API.createPoll(postData).then(res => {
-    // poll_id = res.id;
+    poll_id = res.id;
     console.log(res);
   });
-  // if (poll_id != null) {
-  //   console.log(API.createOptions({poll_id: poll_id, texts: options}));
-  // }
+
+  // Create the options for the newly created poll
+  setTimeout(() => API.createOptions({poll_id: poll_id, texts: options}).then(res => console.log(res)), 0);
 };
 
 
 function App() {
-  // let test = API.test().then(res => res);
   const [ optionCount, setOptionCount ] = useState(0);
-  console.log(optionCount);
 
   return (
     <div className="App">

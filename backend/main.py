@@ -52,7 +52,7 @@ def create_poll(poll: schemas.PollCreate, db: SessionLocal = Depends(get_db)):
 
 
 @app.post('/create-options/')
-def create_options(options: schemas.MultipleOptionsCreate, db: SessionLocal = Depends(get_db)):
+def create_options(options, db: SessionLocal = Depends(get_db)):
     try:
         for text in options.texts:
             crud.create_option(db, {"poll_id": options.poll_id, "text": text})

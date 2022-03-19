@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
+
+import API from '././API';
 
 export default function Poll() {
   const {poll_id} = useParams();
-  console.log(poll_id);
+  const [pollName, setPollName] = useState('');
+  API.getPoll(Number(poll_id)).then(res => setPollName(res.name));
+
   return (<>
     <div className="App">
       <h1>
-        Hello {poll_id}
+        Hello {pollName}
       </h1>
     </div>
   </>)
