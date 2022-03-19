@@ -25,7 +25,7 @@ export default function Poll() {
   const [poll, setPoll] = useState<PollInterface>();
   const [value, setValue] = useState('');
 
-  console.log(value);
+  // console.log(value);
 
   useEffect(() => {
     API.getPoll(Number(poll_id)).then((res: PollInterface) => setPoll(res));

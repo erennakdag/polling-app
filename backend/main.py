@@ -65,4 +65,4 @@ def create_options(poll_id: int, options: List[str], db: SessionLocal = Depends(
 
 @app.post('/vote/{option_id}')
 def vote(option_id: int, db: SessionLocal = Depends(get_db)):
-    return crud.vote(db, option_id)
+    return {"status": "success" if crud.vote(db, option_id) else "error"}

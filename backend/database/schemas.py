@@ -8,10 +8,6 @@ class OptionBase(BaseModel):
 
 class OptionCreate(OptionBase):
     text: str
-    
-
-class MultipleOptionsCreate(OptionBase):
-    texts: List[str]
 
 
 class Option(OptionBase):

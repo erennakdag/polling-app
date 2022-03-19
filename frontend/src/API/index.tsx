@@ -7,7 +7,7 @@ const CREATE_OPTIONS = 'create-options/'
 const VOTE = 'vote/';
 
 // main API fetch function
-async function _request<T>(url: string, method: any, data?: T) {
+async function _request(url: string, method: any, data?: any) {
     let response = await axios({
         url: url,
         method: method,
@@ -23,7 +23,7 @@ async function _request<T>(url: string, method: any, data?: T) {
 // API abstraction
 const API = {
 
-    // index page, only returns the varification value for testing the API
+    // index endpoint, only returns the varification value for testing the API
     test: async () => _request(API_URL, 'GET'),
 
     // GET functions

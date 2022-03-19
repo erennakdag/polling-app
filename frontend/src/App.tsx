@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
 
 // MUI imports
 import { Typography, TextField, Grid, Box, Button } from '@mui/material';
@@ -30,10 +29,10 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>, optionCount: numb
   API.createPoll(postData)
   .then(res => {
     poll_id = res.id;
-    console.log(res);
+    // console.log(res);
   })
   .then(_ => {
-    API.createOptions({poll_id: poll_id, texts: options}).then(res => console.log(res));
+    API.createOptions({poll_id: poll_id, texts: options}).then(res => res);
   })
   .then(_ => window.open(`${'http://192.168.2.37:3000/'}${poll_id}`, '_blank')?.focus());
 };
