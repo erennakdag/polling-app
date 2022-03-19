@@ -4,14 +4,14 @@ import { BrowserRouter, Routes, Route, } from 'react-router-dom';
 import './index.css';
 
 import App from './App';
+import Poll from './Poll';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        {/* <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} /> */}
+        <Route path='/:poll_id' element={<Poll />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

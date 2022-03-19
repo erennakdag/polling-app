@@ -20,7 +20,14 @@ async function _request<T>(url: string, method: any, data?: T) {
 
 // API abstraction
 export const API = {
+
+    // index page, only returns the varification value for testing the API
     test: async () => _request(API_URL, 'GET'),
+
+    // GET functions
     getPoll: async (poll_id: number) => _request(`${API_URL}${poll_id}`, 'GET'),
+
+    // POST functions
     createPoll: async (pollCreate: any) => _request(`${API_URL}${NEW_POLL}`, 'POST', pollCreate),
+
 }
