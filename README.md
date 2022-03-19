@@ -1,5 +1,3 @@
-# voting-app
+# polling-app
 
-An online voting website
-
-bruh
+An online polling website

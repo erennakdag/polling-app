@@ -3,17 +3,17 @@ from typing import List
 from pydantic import BaseModel
 
 
-class CandidateBase(BaseModel):
-    election_id: int
+class OptionBase(BaseModel):
+    poll_id: int
     name: str
     description: str
     
 
-class CandidateCreate(CandidateBase):
+class OptionCreate(OptionBase):
     pass
 
 
-class Candidate(CandidateBase):
+class Option(OptionBase):
     id: int
     votes: int
     
@@ -21,40 +21,21 @@ class Candidate(CandidateBase):
         orm_mode = True
 
 
-class ElectionBase(BaseModel):
-    creator_id: int
+class PollBase(BaseModel):
     name: str
-    desciption: str
+    description: str
 
 
-class ElectionCreate(ElectionBase):
-    pass
+class PollCreate(PollBase):
+    end_date: datetime
 
 
-class Election(ElectionBase):
+class Poll(PollBase):
     id: int
     created_at: datetime
     end_date: datetime
     participant_num: int
-    candidates: List[Candidate] = []
-    
-    class Config:
-        orm_mode = True
-
-
-class UserBase(BaseModel):
-    username: str
-    email: str
-    password: str
-    
-
-class UserCreate(UserBase):
-    pass
-
-
-class User(UserBase):
-    id: int
-    elections: List[Election] = []
+    options: List[Option] = []
     
     class Config:
         orm_mode = True

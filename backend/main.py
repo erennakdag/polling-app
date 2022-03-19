@@ -1,4 +1,5 @@
 # FastAPI Imports
+from urllib import response
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -39,21 +40,11 @@ def index():
     return {"test": "data"}
 
 
-# Create new user
-@app.post('/create-user/', response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: SessionLocal = Depends(get_db)):
-    
-    if crud.get_user_by_email_or_username(db, user.email, user.username):
-        raise HTTPException(status_code=400, detail='Email or Username already taken!')
-    
-    return crud.create_user(db, user)
+@app.get('/{poll_id}', response_model=schemas.Poll)
+def get_poll(poll_id: int, db: SessionLocal = Depends(get_db)):
+    return crud.get_poll(db, poll_id)
 
 
-@app.get('/get-user/{username}', response_model=schemas.User)
-def get_user(username: str, db: SessionLocal = Depends(get_db)):
-    
-    user = crud.get_user_by_username(db, username)
-    if user:
-        return user
-    else:
-        raise HTTPException(status_code=404, detail='User not found!')
+@app.post('/new-poll/', response_model=schemas.Poll)
+def create_poll(poll: schemas.PollCreate, db: SessionLocal = Depends(get_db)):
+    return crud.create_poll(db, poll)

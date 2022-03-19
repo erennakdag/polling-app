@@ -1,11 +1,8 @@
 import axios from "axios";
 
-import { UserData, UserCreate } from './API.models';
-
 // URLS
 const API_URL = 'http://127.0.0.1:8000/';
-const GET_USER = 'get-user/';
-const CREATE_USER = 'create-user/';
+const NEW_POLL = 'new-poll';
 
 // main API fetch function
 async function _request<T>(url: string, method: any, data?: T) {
@@ -24,6 +21,6 @@ async function _request<T>(url: string, method: any, data?: T) {
 // API abstraction
 export const API = {
     test: async () => _request(API_URL, 'GET'),
-    getUser: async (username: string): Promise<UserData> => _request(`${API_URL}${GET_USER}${username}`, 'GET'),
-    createUser: async (userCreate: UserCreate): Promise<UserData> => _request<UserCreate>(`${API_URL}${CREATE_USER}`, 'POST', userCreate),
+    getPoll: async (poll_id: number) => _request(`${API_URL}${poll_id}`, 'GET'),
+    createPoll: async (pollCreate: any) => _request(`${API_URL}${NEW_POLL}`, 'POST', pollCreate),
 }

@@ -14,8 +14,8 @@ function App() {
     <div className="App">
       <h1>{bruh}</h1>
 
-      <Link to="/signin">Sign In</Link> <br />
-      <Link to="/signup">Sign Up</Link>
+      {/* <Link to="/signin">Sign In</Link> <br />
+      <Link to="/signup">Sign Up</Link> */}
 
     </div>
   );
