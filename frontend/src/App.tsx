@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 // MUI imports
 import { Typography, TextField, Grid, Box, Button } from '@mui/material';
@@ -80,9 +80,9 @@ function App() {
                   <Grid key={id} item xs={12}>
                     <TextField
                     variant="outlined"
-                    label={`Option ${id}`}
-                    id={`option${id}`}
-                    name={`option${id}`}
+                    label={`Option ${id+1}`}
+                    id={`option${id+1}`}
+                    name={`option${id+1}`}
                     autoComplete='off'
                     required
                     sx={{width: '25%'}}
