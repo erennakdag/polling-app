@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
 
@@ -13,6 +12,7 @@ class OptionCreate(OptionBase):
 
 class MultipleOptionsCreate(OptionBase):
     texts: List[str]
+
 
 class Option(OptionBase):
     id: int

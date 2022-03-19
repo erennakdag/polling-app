@@ -31,7 +31,7 @@ const API = {
 
     // POST functions
     createPoll: async (pollCreate: any) => _request(`${API_URL}${NEW_POLL}`, 'POST', pollCreate),
-    createOptions: async (options: any) => _request(`${API_URL}${CREATE_OPTIONS}`, 'POST', options),
+    createOptions: async (options: {poll_id: number, texts: string[]}) => _request(`${API_URL}${CREATE_OPTIONS}${options.poll_id}`, 'POST', options.texts),
     vote: async (option_id: number) => _request(`${API_URL}${VOTE}${option_id}`, 'POST'),
 }
 

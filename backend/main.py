@@ -1,7 +1,6 @@
 # FastAPI Imports
-from datetime import datetime
 from typing import List
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Database Handling Imports
@@ -15,11 +14,12 @@ app = FastAPI()
 # CORS Middleware for the React Fronend
 origins = [
     "http://localhost:3000",
+    "http://192.168.2.37:3000/",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -51,11 +51,11 @@ def create_poll(poll: schemas.PollCreate, db: SessionLocal = Depends(get_db)):
     return crud.create_poll(db, poll)
 
 
-@app.post('/create-options/')
-def create_options(options, db: SessionLocal = Depends(get_db)):
+@app.post('/create-options/{poll_id}')
+def create_options(poll_id: int, options: List[str], db: SessionLocal = Depends(get_db)):
     try:
-        for text in options.texts:
-            crud.create_option(db, {"poll_id": options.poll_id, "text": text})
+        for text in options:
+            crud.create_option(db, {"poll_id": poll_id, "text": text})
     except Exception as e:
         print(e)
         return {'error': 'something went wrong'}

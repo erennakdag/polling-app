@@ -22,18 +22,20 @@ function handleSubmit(event: React.FormEvent<HTMLFormElement>, optionCount: numb
   // Get the options created
   const options: string[] = [];
   for (let i = 0; i < optionCount; i++) {
-    options.push(data.get(`option${i}`)?.toString() || '');
+    options.push(data.get(`option${i+1}`)?.toString() || '');
   }
 
   // Create a new poll and get the poll_id
   let poll_id: number;
-  API.createPoll(postData).then(res => {
+  API.createPoll(postData)
+  .then(res => {
     poll_id = res.id;
     console.log(res);
-  });
-
-  // Create the options for the newly created poll
-  setTimeout(() => API.createOptions({poll_id: poll_id, texts: options}).then(res => console.log(res)), 0);
+  })
+  .then(_ => {
+    API.createOptions({poll_id: poll_id, texts: options}).then(res => console.log(res));
+  })
+  .then(_ => window.open(`${'http://192.168.2.37:3000/'}${poll_id}`, '_blank')?.focus());
 };
 
 

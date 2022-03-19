@@ -39,6 +39,7 @@ export default function Poll() {
       <Typography variant="h5" component="h1" mt={3} mb={5}>
         {poll?.description}
       </Typography>
+      {poll?.options.length === 0 ||
       <form onSubmit={(e) => API.vote(Number(value)).then(res => console.log(res))}>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Options</FormLabel>
@@ -64,7 +65,7 @@ export default function Poll() {
             Submit
           </Button>
         </FormControl>
-      </form>
+      </form>}
     </div>
   );
 }
